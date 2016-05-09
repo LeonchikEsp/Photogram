@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Photogram</string>
+    <string name="app_name" translatable="false">Photogram</string>
+    <string name="settings">Settings</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="sublogo">Create and solve your own nonogram</string>
+    <string name="title_activity_playground">PlaygroundActivity</string>
 </resources>
