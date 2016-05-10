@@ -22,6 +22,8 @@ public class PlaygroundActivity extends AppCompatActivity
         Intent intent = getIntent();
         sourceImage = intent.getParcelableExtra("image");
 
+        sourceImage = BitmapColourToBWConverter.convert(sourceImage);
+
         imageView.setImageBitmap(sourceImage);
     }
 }
