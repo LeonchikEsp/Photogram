@@ -1,4 +1,4 @@
-package com.mobile.gui.esp.photogram;
+package com.mobile.gui.esp.photogram.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mobile.gui.esp.photogram.R;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -25,20 +27,12 @@ public class MainActivity extends AppCompatActivity
         iv = (ImageView) findViewById(R.id.photo);
     }
 
-    protected void takeAPhoto(View view)
+    public void takeAPhoto(View view)
     {
         info.setText("Take_a_photo button pressed");
 
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, 0);
-    }
-
-    protected void settings(View view)
-    {
-        info.setText("Settings button pressed");
-
-        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(settingsIntent);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -54,5 +48,13 @@ public class MainActivity extends AppCompatActivity
             playgroundIntent.putExtra("image", image);
             startActivity(playgroundIntent);
         }
+    }
+
+    public void settings(View view)
+    {
+        info.setText("Settings button pressed");
+
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 }
