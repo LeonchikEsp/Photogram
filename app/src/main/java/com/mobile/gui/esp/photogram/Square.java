@@ -44,12 +44,12 @@ public class Square
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
-    static float squareCoords[] = {
+    float squareCoords[] = {
             //-0.5f,  0.5f, 0.0f,   // top left
             //-0.5f, -0.5f, 0.0f,   // bottom left
             //0.5f, -0.5f, 0.0f,   // bottom right
             //0.5f,  0.5f, 0.0f }; // top right
-            0.1f,  0.0f, 0.0f,   // top left
+            0.0f,  0.1f, 0.0f,   // top left
             0.0f, 0.5f, 0.0f,   // bottom left
             0.5f, 0.5f, 0.0f,   // bottom right
             0.5f,  0.0f, 0.0f }; // top right
@@ -95,7 +95,17 @@ public class Square
         GLES20.glAttachShader(mProgram, fragmentShader); // add the fragment shader to program
         GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
     }
-
+    public void setCoordinates(float tl_x, float tl_y, float bl_x, float bl_y, float br_x, float br_y, float tr_x, float tr_y)
+    {
+        squareCoords[0]=tl_x;
+        squareCoords[1]=tl_y;
+        squareCoords[3]=bl_x;
+        squareCoords[4]=bl_y;
+        squareCoords[6]=br_x;
+        squareCoords[7]=br_y;
+        squareCoords[9]=tr_x;
+        squareCoords[10]=tr_y;
+    }
     /**
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *

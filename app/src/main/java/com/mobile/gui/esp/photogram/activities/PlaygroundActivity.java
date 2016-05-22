@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.mobile.gui.esp.photogram.FieldGLSurfaceView;
 import com.mobile.gui.esp.photogram.MyGLSurfaceView;
 
 public class PlaygroundActivity extends AppCompatActivity
@@ -16,7 +17,7 @@ public class PlaygroundActivity extends AppCompatActivity
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        mGLView = new MyGLSurfaceView(this);
+        mGLView = new FieldGLSurfaceView(this);
         setContentView(mGLView);
     }
 
