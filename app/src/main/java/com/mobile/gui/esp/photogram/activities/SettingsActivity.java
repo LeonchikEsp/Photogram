@@ -21,7 +21,6 @@ public class SettingsActivity extends AppCompatActivity
 
         button = (Button) findViewById(R.id.button);
     }
-
     public void buttonPressed(View view)
     {
         button.setText("Pressed " + ++iterator + " times");

@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.mobile.gui.esp.photogram.Field;
 import com.mobile.gui.esp.photogram.FieldGLSurfaceView;
 import com.mobile.gui.esp.photogram.MyGLSurfaceView;
 
@@ -14,14 +15,14 @@ public class PlaygroundActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(new Field(this));
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        mGLView = new FieldGLSurfaceView(this);
-        setContentView(mGLView);
+
     }
 
-    @Override
+    /*@Override
     protected void onPause() {
         super.onPause();
         // The following call pauses the rendering thread.
@@ -29,16 +30,16 @@ public class PlaygroundActivity extends AppCompatActivity
         // you should consider de-allocating objects that
         // consume significant memory here.
         mGLView.onPause();
-    }
+    }*/
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         // The following call resumes a paused rendering thread.
         // If you de-allocated graphic objects for onPause()
         // this is a good place to re-allocate them.
         mGLView.onResume();
-    }
+    }*/
         /*setContentView(R.layout.activity_playground);
 
         imageView = (ImageView) findViewById(R.id.imageView);

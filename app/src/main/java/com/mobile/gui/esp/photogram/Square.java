@@ -9,6 +9,7 @@ package com.mobile.gui.esp.photogram;
         import java.nio.ShortBuffer;
 
         import android.opengl.GLES20;
+        import android.opengl.Matrix;
 
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
