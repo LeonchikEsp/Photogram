@@ -2,6 +2,7 @@ package com.mobile.gui.esp.photogram;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
@@ -11,6 +12,10 @@ import android.opengl.Matrix;
 public class FieldGLSurfaceView extends GLSurfaceView
 {
     private final FieldGLRenderer mRenderer;
+    private final float[] mMVPMatrix = new float[16];
+    private final float[] mProjectionMatrix = new float[16];
+    private final float[] mViewMatrix = new float[16];
+    private final float[] mRotationMatrix = new float[16];
     public FieldGLSurfaceView(Context context)
     {
         super(context);
@@ -19,7 +24,7 @@ public class FieldGLSurfaceView extends GLSurfaceView
         setEGLContextClientVersion(2);
 
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new FieldGLRenderer(context);
+        mRenderer = new FieldGLRenderer(context, this);
         setRenderer(mRenderer);
 
         // Render the view only when there is a change in the drawing data

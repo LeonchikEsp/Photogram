@@ -15,17 +15,18 @@ import javax.microedition.khronos.opengles.GL10;
 public class FieldGLRenderer implements GLSurfaceView.Renderer
 {
     private Context context;
-    public FieldGLRenderer(Context context)
+    private FieldGLSurfaceView field;
+    public FieldGLRenderer(Context context, FieldGLSurfaceView view)
     {
         this.context=context;
+        field=view;
     }
     @Override
     public void onDrawFrame(GL10 unused)
     {
         // Draw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-        Bitmap image=Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8);//ALPHA_8
-        FieldGLSurfaceView field=new FieldGLSurfaceView(context);//тут вылетает с сообщением "setRenderer has already been called for this instance."
+        Bitmap image=Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8);
         field.draw(image);
     }
     @Override
