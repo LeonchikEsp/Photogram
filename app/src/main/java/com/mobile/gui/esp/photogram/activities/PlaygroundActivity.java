@@ -1,5 +1,6 @@
 package com.mobile.gui.esp.photogram.activities;
 
+import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,8 @@ public class PlaygroundActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new Field(this));
+        Bitmap image=Bitmap.createBitmap(10, 10, Bitmap.Config.ALPHA_8);
+        setContentView(new Field(this, image));
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
