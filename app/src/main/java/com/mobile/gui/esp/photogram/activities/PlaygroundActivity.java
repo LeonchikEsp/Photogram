@@ -27,8 +27,8 @@ public class PlaygroundActivity extends AppCompatActivity
         float size=10;
         Bitmap nonogram=Bitmap.createBitmap((int)(BWImage.getWidth()/size), (int)(BWImage.getHeight()/size), Bitmap.Config.ARGB_8888);
         Bitmap test=Bitmap.createBitmap(135, 240, Bitmap.Config.ARGB_8888);
-        for(int i=0; i<BWImage.getHeight()-size; i+=size)
-            for(int j=0; j<BWImage.getWidth()-size; j+=size)
+        for(int i=0; i<=BWImage.getHeight()-size; i+=size)
+            for(int j=0; j<=BWImage.getWidth()-size; j+=size)
             {
                 long black_count = 0;
                 for (int n = 0; n < size; n++)
