@@ -32,12 +32,12 @@ public class Field extends View {
     {
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(x, y, side, side, mPaint);
+        canvas.drawRect(x, y, x+side, y+side, mPaint);
     }
     @Override
     protected void onDraw(Canvas canvas)
     {
-        int down_offset=50;
+        int down_offset=150;
         float w=getWidth();
         float h=getHeight();
         float iw=image.getWidth();
@@ -49,12 +49,15 @@ public class Field extends View {
             square_size=square_h;
         else
             square_size=square_w;
-        for(int i=0; i<image.getWidth(); i++)
-            for(int j=0; j<image.getHeight(); j++)
+        for(int i=0; i<image.getHeight(); i++)
+            for(int j=0; j<image.getWidth(); j++)
             {
                 float top_left_x=(image.getWidth()/2+1+j)*square_size;
                 float top_left_y=(image.getHeight()/2+1+i)*square_size;
-                drawWhiteSquare(canvas, top_left_x, top_left_y, square_size);
+                if(image.getPixel(j, i)==Color.BLACK)
+                    drawBlackSquare(canvas, top_left_x, top_left_y, square_size);
+                else
+                    drawWhiteSquare(canvas, top_left_x, top_left_y, square_size);
             }
     }
 }
