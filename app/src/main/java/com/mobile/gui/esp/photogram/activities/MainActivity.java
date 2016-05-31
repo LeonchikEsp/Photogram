@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity
 
     public void takeAPhoto(View view)
     {
-        info.setText("Take_a_photo button pressed");
 
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, 0);
@@ -52,7 +51,6 @@ public class MainActivity extends AppCompatActivity
 
     public void settings(View view)
     {
-        info.setText("Settings button pressed");
 
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
         startActivity(settingsIntent);

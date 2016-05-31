@@ -73,12 +73,18 @@ public class Field extends View
     }
     @Override
     protected void onDraw(Canvas canvas) {
-        if(type=="nonogram")
+        if(type=="completed")
         {
-            nonogram=Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.ARGB_8888);
+            mPaint.setTextSize(50);
+            mPaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("Нонограмма решена!", (getWidth()) / 2, 50, mPaint);
+            mPaint.setTextSize(30);
+            canvas.drawText("Нажмите на экран, чтобы выйти в главное меню", (getWidth())/2, 100, mPaint);
+        }
+        if (type == "nonogram") {
+            nonogram = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.ARGB_8888);
             for (int i = 0; i < image.getHeight(); i++)
-                for (int j = 0; j < image.getWidth(); j++)
-                {
+                for (int j = 0; j < image.getWidth(); j++) {
                     if (image.getPixel(j, i) == Color.BLACK)
                         nonogram.setPixel(j, i, Color.BLACK);
                 }
@@ -98,71 +104,70 @@ public class Field extends View
             for (int j = 0; j < image.getWidth(); j++) {
                 float top_left_x = (image.getWidth() / 2 + 1 + j) * square_size;
                 float top_left_y = (image.getHeight() / 2 + 1 + i) * square_size;
-                if((image.getPixel(j, i) == Color.BLACK)&&(type!="nonogram"))
+                if ((image.getPixel(j, i) == Color.BLACK) && (type != "nonogram"))
                     drawBlackSquare(canvas, top_left_x, top_left_y, square_size);
                 else
                     drawWhiteSquare(canvas, top_left_x, top_left_y, square_size);
             }
-        int black_row_number = 0;
-        boolean isPreviousBlack = false;
-        int square_number = 1;
-        for (int i = nonogram.getHeight() - 1; i >= 0; i--)//числа слева от поля
-        {
-            for (int j = nonogram.getWidth() - 1; j >= 0; j--) {
-                if (nonogram.getPixel(j, i) == Color.BLACK) {
-                    black_row_number++;
-                    isPreviousBlack = true;
-                } else {
-                    if (isPreviousBlack) {
-                        float top_left_x = (nonogram.getWidth() / 2 + 1 - square_number) * square_size;
-                        float top_left_y = (nonogram.getHeight() / 2 + 1 + i) * square_size;
-                        drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
-                        square_number++;
-                    }
-                    black_row_number = 0;
-                    isPreviousBlack = false;
-                }
-            }
-            if (isPreviousBlack) {
-                float top_left_x = (nonogram.getWidth() / 2 + 1 - square_number) * square_size;
-                float top_left_y = (nonogram.getHeight() / 2 + 1 + i) * square_size;
-                drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
-            }
-            black_row_number = 0;
-            square_number = 1;
-            isPreviousBlack = false;
-        }
-        black_row_number = 0;
-        isPreviousBlack = false;
-        square_number = 1;
-        for (int j = nonogram.getWidth() - 1; j >= 0; j--)//числа сверху от поля
-        {
-            for (int i = nonogram.getHeight() - 1; i >= 0; i--) {
-                if (nonogram.getPixel(j, i) == Color.BLACK) {
-                    black_row_number++;
-                    isPreviousBlack = true;
-                } else
-                {
-                    if (isPreviousBlack)
-                    {
-                        float top_left_x = (nonogram.getWidth() / 2 + 1 + j) * square_size;
-                        float top_left_y = (nonogram.getHeight() / 2 + 1 - square_number) * square_size;
-                        drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
-                        square_number++;
-                    }
-                    black_row_number = 0;
-                    isPreviousBlack = false;
-                }
-            }
-            if (isPreviousBlack)
+        if (type != "completed") {
+            int black_row_number = 0;
+            boolean isPreviousBlack = false;
+            int square_number = 1;
+            for (int i = nonogram.getHeight() - 1; i >= 0; i--)//числа слева от поля
             {
-                float top_left_x = (nonogram.getWidth() / 2 + 1 + j) * square_size;
-                float top_left_y = (nonogram.getHeight() / 2 + 1 - square_number) * square_size;
-                drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
+                for (int j = nonogram.getWidth() - 1; j >= 0; j--) {
+                    if (nonogram.getPixel(j, i) == Color.BLACK) {
+                        black_row_number++;
+                        isPreviousBlack = true;
+                    } else {
+                        if (isPreviousBlack) {
+                            float top_left_x = (nonogram.getWidth() / 2 + 1 - square_number) * square_size;
+                            float top_left_y = (nonogram.getHeight() / 2 + 1 + i) * square_size;
+                            drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
+                            square_number++;
+                        }
+                        black_row_number = 0;
+                        isPreviousBlack = false;
+                    }
+                }
+                if (isPreviousBlack) {
+                    float top_left_x = (nonogram.getWidth() / 2 + 1 - square_number) * square_size;
+                    float top_left_y = (nonogram.getHeight() / 2 + 1 + i) * square_size;
+                    drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
+                }
+                black_row_number = 0;
+                square_number = 1;
+                isPreviousBlack = false;
             }
             black_row_number = 0;
-            square_number = 1;
             isPreviousBlack = false;
+            square_number = 1;
+            for (int j = nonogram.getWidth() - 1; j >= 0; j--)//числа сверху от поля
+            {
+                for (int i = nonogram.getHeight() - 1; i >= 0; i--) {
+                    if (nonogram.getPixel(j, i) == Color.BLACK) {
+                        black_row_number++;
+                        isPreviousBlack = true;
+                    } else {
+                        if (isPreviousBlack) {
+                            float top_left_x = (nonogram.getWidth() / 2 + 1 + j) * square_size;
+                            float top_left_y = (nonogram.getHeight() / 2 + 1 - square_number) * square_size;
+                            drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
+                            square_number++;
+                        }
+                        black_row_number = 0;
+                        isPreviousBlack = false;
+                    }
+                }
+                if (isPreviousBlack) {
+                    float top_left_x = (nonogram.getWidth() / 2 + 1 + j) * square_size;
+                    float top_left_y = (nonogram.getHeight() / 2 + 1 - square_number) * square_size;
+                    drawNumberSquare(canvas, top_left_x, top_left_y, square_size, black_row_number);
+                }
+                black_row_number = 0;
+                square_number = 1;
+                isPreviousBlack = false;
+            }
         }
     }
 }

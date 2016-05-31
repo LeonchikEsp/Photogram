@@ -25,6 +25,7 @@ public class PlaygroundActivity extends AppCompatActivity implements View.OnTouc
     Field field;
     Bitmap nonogram;
     Bitmap user_image;
+    boolean go_to_main_menu=false;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -65,48 +66,83 @@ public class PlaygroundActivity extends AppCompatActivity implements View.OnTouc
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
     }
+    private void Completed()
+    {
+        go_to_main_menu=true;
+        field.setType("completed");
+        field.setOnTouchListener(this);
+        field.invalidate();
+        setContentView(field);
+    }
     @Override
     public boolean onTouch(View v, MotionEvent event)
     {
-        float x = event.getX();
-        float y = event.getY();
-        Canvas canvas=new Canvas();
-        float square_size=field.getSize();
-        switch (event.getAction())
+        if(go_to_main_menu)
         {
-            case MotionEvent.ACTION_DOWN: //нажатие
-                if(x<(user_image.getWidth()/2+1)*square_size)//левее поля
-                    break;
-                if(x>=(user_image.getWidth()/2+1+user_image.getWidth())*square_size)//правее поля
-                    break;
-                int square_x=0;
-                for(int i=1; i<user_image.getWidth()+1; i++)
-                    if(x<(user_image.getWidth()/2+1+i)*square_size)
-                    {
-                        square_x=i-1;
+            boolean act_down=false;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    act_down=true;
+                case MotionEvent.ACTION_UP:
+                    if(act_down) {
+                        Intent MainMenu = new Intent(this, MainActivity.class);
+                        startActivity(MainMenu);
+                    }
+                }
+        }
+        else {
+            float x = event.getX();
+            float y = event.getY();
+            Canvas canvas = new Canvas();
+            float square_size = field.getSize();
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: //нажатие
+                    if (x < (user_image.getWidth() / 2 + 1) * square_size)//левее поля
+                        break;
+                    if (x >= (user_image.getWidth() / 2 + 1 + user_image.getWidth()) * square_size)//правее поля
+                        break;
+                    int square_x = 0;
+                    for (int i = 1; i < user_image.getWidth() + 1; i++)
+                        if (x < (user_image.getWidth() / 2 + 1 + i) * square_size) {
+                            square_x = i - 1;
+                            break;
+                        }
+                    if (y < (user_image.getHeight() / 2 + 1) * square_size)//ниже поля
+                        break;
+                    if (y >= (user_image.getHeight() / 2 + 1 + user_image.getHeight()) * square_size)//выше поля
+                        break;
+                    int square_y = 0;
+                    for (int i = 1; i <= user_image.getHeight() + 1; i++)
+                        if (y < (user_image.getHeight() / 2 + 1 + i) * square_size) {
+                            square_y = i - 1;
+                            break;
+                        }
+                    if (user_image.getPixel(square_x, square_y) == Color.BLACK)
+                        user_image.setPixel(square_x, square_y, Color.WHITE);
+                    else
+                        user_image.setPixel(square_x, square_y, Color.BLACK);
+                    boolean isCompleted = true;
+                    for (int i = 0; i < user_image.getHeight(); i++)//поле
+                        for (int j = 0; j < user_image.getWidth(); j++) {
+                            if ((user_image.getPixel(j, i) == Color.BLACK) && (nonogram.getPixel(j, i) != Color.BLACK)) {
+                                isCompleted = false;
+                                break;
+                            }
+                            if ((user_image.getPixel(j, i) != Color.BLACK) && (nonogram.getPixel(j, i) == Color.BLACK)) {
+                                isCompleted = false;
+                                break;
+                            }
+                        }
+                    if (isCompleted) {
+                        Completed();
                         break;
                     }
-                if(y<(user_image.getHeight()/2+1)*square_size)//ниже поля
+                    field.setImage(user_image);
+                    field.setType("user_image");
+                    field.setOnTouchListener(this);
+                    field.invalidate();
+                    setContentView(field);
                     break;
-                if(y>=(user_image.getHeight()/2+1+user_image.getHeight())*square_size)//выше поля
-                    break;
-                int square_y=0;
-                for(int i=1; i<=user_image.getHeight()+1; i++)
-                    if(y<(user_image.getHeight()/2+1+i)*square_size)
-                    {
-                        square_y=i-1;
-                        break;
-                    }
-                if(user_image.getPixel(square_x, square_y) == Color.BLACK)
-                    user_image.setPixel(square_x, square_y, Color.WHITE);
-                else
-                    user_image.setPixel(square_x, square_y, Color.BLACK);
-                field.setImage(user_image);
-                field.setType("user_image");
-                field.setOnTouchListener(this);
-                field.invalidate();
-                setContentView(field);
-                break;
             /*case MotionEvent.ACTION_MOVE: // движение
                 sMove = "Move: " + x + "," + y;
                 break;
@@ -115,6 +151,7 @@ public class PlaygroundActivity extends AppCompatActivity implements View.OnTouc
                 sMove = "";
                 sUp = "Up: " + x + "," + y;
                 break;*/
+            }
         }
         return true;
     }
