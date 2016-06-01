@@ -29,6 +29,7 @@ public class Field extends View
     {
         this.type = type;
     }
+    public int down_offset = 150;
     public Field(Context context, Bitmap image, String type)
     {
         super(context);
@@ -71,6 +72,10 @@ public class Field extends View
         mPaint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(Integer.toString(number), x + side / 2, y + 3 * side / 4, mPaint);
     }
+    public float getH()
+    {
+        return getHeight();
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         if(type=="completed")
@@ -89,7 +94,6 @@ public class Field extends View
                         nonogram.setPixel(j, i, Color.BLACK);
                 }
         }
-        int down_offset = 150;
         float w = getWidth();
         float h = getHeight();
         float iw = image.getWidth();
@@ -168,6 +172,12 @@ public class Field extends View
                 square_number = 1;
                 isPreviousBlack = false;
             }
+            mPaint.setColor(Color.BLACK);
+            mPaint.setStyle(Paint.Style.STROKE);
+            canvas.drawRect(50, getHeight()-down_offset, 50+100, getHeight()-down_offset+100, mPaint);
+            mPaint.setTextSize(80);
+            mPaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("?", 50+50, getHeight()-down_offset+50+30, mPaint);
         }
     }
 }

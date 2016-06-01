@@ -74,6 +74,31 @@ public class PlaygroundActivity extends AppCompatActivity implements View.OnTouc
         field.invalidate();
         setContentView(field);
     }
+    private void Hint()
+    {
+        for (int i = 0; i < user_image.getHeight(); i++)//поле
+            for (int j = 0; j < user_image.getWidth(); j++) {
+                if ((user_image.getPixel(j, i) == Color.BLACK) && (nonogram.getPixel(j, i) != Color.BLACK)) {
+                    user_image.setPixel(j, i, Color.WHITE);
+                    field.setImage(user_image);
+                    field.setType("user_image");
+                    field.setOnTouchListener(this);
+                    field.invalidate();
+                    return;
+                }
+            }
+        for (int i = 0; i < user_image.getHeight(); i++)//поле
+            for (int j = 0; j < user_image.getWidth(); j++) {
+                if ((user_image.getPixel(j, i) != Color.BLACK) && (nonogram.getPixel(j, i) == Color.BLACK)) {
+                    user_image.setPixel(j, i, Color.BLACK);
+                    field.setImage(user_image);
+                    field.setType("user_image");
+                    field.setOnTouchListener(this);
+                    field.invalidate();
+                    return;
+                }
+            }
+    }
     @Override
     public boolean onTouch(View v, MotionEvent event)
     {
@@ -122,7 +147,7 @@ public class PlaygroundActivity extends AppCompatActivity implements View.OnTouc
                     else
                         user_image.setPixel(square_x, square_y, Color.BLACK);
                     boolean isCompleted = true;
-                    for (int i = 0; i < user_image.getHeight(); i++)//поле
+                    for (int i = 0; i < user_image.getHeight(); i++)
                         for (int j = 0; j < user_image.getWidth(); j++) {
                             if ((user_image.getPixel(j, i) == Color.BLACK) && (nonogram.getPixel(j, i) != Color.BLACK)) {
                                 isCompleted = false;
@@ -145,9 +170,30 @@ public class PlaygroundActivity extends AppCompatActivity implements View.OnTouc
                     break;
             /*case MotionEvent.ACTION_MOVE: // движение
                 sMove = "Move: " + x + "," + y;
-                break;
-            case MotionEvent.ACTION_UP: // отпускание
-            case MotionEvent.ACTION_CANCEL:
+                break;*/
+            case MotionEvent.ACTION_UP:
+                if((x>50)&&(x<150)&&(y>field.getH()-field.down_offset)&& (y<field.getH()-field.down_offset+100))
+                {
+                    isCompleted = true;
+                    for (int i = 0; i < user_image.getHeight(); i++)
+                        for (int j = 0; j < user_image.getWidth(); j++) {
+                            if ((user_image.getPixel(j, i) == Color.BLACK) && (nonogram.getPixel(j, i) != Color.BLACK)) {
+                                isCompleted = false;
+                                break;
+                            }
+                            if ((user_image.getPixel(j, i) != Color.BLACK) && (nonogram.getPixel(j, i) == Color.BLACK)) {
+                                isCompleted = false;
+                                break;
+                            }
+                        }
+                    if (isCompleted) {
+                        Completed();
+                        break;
+                    }
+                    Hint();
+                    break;
+                }
+            /*case MotionEvent.ACTION_CANCEL:
                 sMove = "";
                 sUp = "Up: " + x + "," + y;
                 break;*/
